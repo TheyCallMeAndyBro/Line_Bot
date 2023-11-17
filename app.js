@@ -48,19 +48,22 @@ async function handleEvent(event) {
     return Promise.resolve(null);
   }
 
-  const completion = await openai.createCompletion({
-    model: "text-davinci-003",
-    prompt: event.message.text,
-    max_token: 100,
+  const response = await openai.createCompletion({
+    model: "gpt-3.5-turbo",
+    messages: [
+      { "role": "user", "content": event.message.text },
+      { "role": "system", "content": "請使用繁體中文回答" }
+    ],
+    max_tokens: 150,
   });
 
-  // create a echoing text message
-  const echo = { type: 'text', text: completion.data.choices[0].text.trim() };
+  const choices = response.data.choices[0];
+  const answer = { type: 'text', text: choices.message.content.trim() || '抱歉，我沒有話可說了。' };
 
   // use reply API
   return client.replyMessage({
     replyToken: event.replyToken,
-    messages: [echo],
+    messages: [answer],
   });
 }
 
