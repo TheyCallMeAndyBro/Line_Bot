@@ -15,7 +15,8 @@ const config = {
 
 // create LINE SDK client
 const client = new line.messagingApi.MessagingApiClient({
-  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
+  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
+  channelSecret: process.env.CHANNEL_SECRET,
 });
 
 
@@ -43,9 +44,11 @@ function handleEvent(event) {
   const echo = { type: 'text', text: event.message.text };
 
   // use reply API
-  return client.replyMessage(event.replyToken, echo);
+  return client.replyMessage({
+    replyToken: event.replyToken,
+    messages: [echo],
+  });
 }
-
 
 app.listen(port, () => {
   console.log(`listening on ${port}`);
