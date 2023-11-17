@@ -48,7 +48,7 @@ async function handleEvent(event) {
     return Promise.resolve(null);
   }
 
-  const response = await openai.createCompletion({
+  const response = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     messages: [
       { "role": "user", "content": event.message.text },
