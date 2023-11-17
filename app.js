@@ -2,16 +2,10 @@ require('dotenv').config()
 
 const express = require('express')
 const app = express()
+const line = require('@line/bot-sdk');
 
 const port = process.env.PORT || 3000;
 
-
-
-
-require('dotenv').config();
-
-const line = require('@line/bot-sdk');
-const express = require('express');
 
 // create LINE SDK config from env variables
 const config = {
