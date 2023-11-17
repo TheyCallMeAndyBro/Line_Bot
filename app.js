@@ -55,12 +55,14 @@ async function handleEvent(event) {
   const choices = chatCompletion.choices[0];
   const answer = { type: 'text', text: choices.message.content.trim() || '抱歉，我沒有話可說了。' };
 
+
   // use reply API
   return client.replyMessage({
     replyToken: event.replyToken,
     messages: [answer],
   });
 }
+
 
 app.listen(port, () => {
   console.log(`listening on ${port}`);
