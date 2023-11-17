@@ -6,13 +6,9 @@ const line = require('@line/bot-sdk');
 
 const port = process.env.PORT || 3000;
 
-const { Configuration, OpenAIApi } = require("openai");
+const OpenAI = require('openai');
 
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
-const openai = new OpenAIApi(configuration);
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY, });
 
 
 // create LINE SDK config from env variables
@@ -26,7 +22,6 @@ const client = new line.messagingApi.MessagingApiClient({
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
   channelSecret: process.env.CHANNEL_SECRET,
 });
-
 
 
 // register a webhook handler with middleware
@@ -48,16 +43,16 @@ async function handleEvent(event) {
     return Promise.resolve(null);
   }
 
-  const response = await openai.createChatCompletion({
-    model: "gpt-3.5-turbo",
+  const chatCompletion = await openai.chat.completions.create({
     messages: [
       { "role": "user", "content": event.message.text },
       { "role": "system", "content": "請使用繁體中文回答" }
     ],
+    model: "gpt-3.5-turbo",
     max_tokens: 150,
   });
 
-  const choices = response.data.choices[0];
+  const choices = chatCompletion.choices[0];
   const answer = { type: 'text', text: choices.message.content.trim() || '抱歉，我沒有話可說了。' };
 
   // use reply API
