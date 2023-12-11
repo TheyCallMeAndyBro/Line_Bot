@@ -1,15 +1,17 @@
 ## Introduce
 
-Users can create their own LINE BOT through this program. Hope you have a pleasant experience!
+Combined the OpenAI API with the LINE API to create a real-time conversational chatbot. This application not only enables instant interaction but also delivers a more intelligent and interesting experience for users. Hope you have a pleasant experience!
 
-This website is built with Node.js, Express.js, LINE API, OPENAI API.
 
 ## Architecture Diagram
 
 ![Diagram](./READMEIMG/Line-bot流程圖.png)
 
 
+## Demo
+
 ![Demo](./READMEIMG/line-bot-demo.gif)
+
 
 
 ## Features
